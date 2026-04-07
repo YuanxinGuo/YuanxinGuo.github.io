@@ -1,108 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Yuanxin Guo">
-  <meta name="description" content="Academic homepage of Yuanxin Guo">
-  <title>Yuanxin Guo - Academic Homepage</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuanxin Guo - Academic Homepage</title>
+    <meta name="description" content="Yuanxin Guo, M.S. student at SWUFE. Research: Binaural Audio Synthesis, Speech Processing.">
+    <meta name="author" content="Yuanxin Guo">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --primary-light: #2980b9;
+            --bg: #ffffff;
+            --bg-alt: #f9fafb;
+            --text: #2c3e50;
+            --text-secondary: #636e72;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --card-shadow: 0 1px 8px rgba(0,0,0,0.06);
+            --nav-bg: rgba(255,255,255,0.96);
+            --tag-bg: #ebf5fb;
+            --tag-text: #1a5276;
+            --transition: 0.3s ease;
+        }
+        [data-theme="dark"] {
+            --bg: #1a1a2e;
+            --bg-alt: #16213e;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border: #2a2a4a;
+            --card-bg: #16213e;
+            --card-shadow: 0 1px 8px rgba(0,0,0,0.3);
+            --nav-bg: rgba(26,26,46,0.96);
+            --tag-bg: #0f3460;
+            --tag-text: #7ec8e3;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            transition: background var(--transition), color var(--transition);
+        }
+        a { color: var(--primary-light); text-decoration: none; transition: color var(--transition); }
+        a:hover { color: #e74c3c; }
 
-    header {
-      background-color: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
-      font-size: 1.8rem;
-    }
+        /* Nav */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: var(--nav-bg); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: 820px; margin: 0 auto; padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between; height: 56px;
+        }
+        .nav-brand { font-weight: 700; font-size: 1.05rem; color: var(--primary); }
+        .nav-links { display: flex; align-items: center; gap: 22px; list-style: none; }
+        .nav-links a { color: var(--text); font-size: 0.88rem; font-weight: 500; }
+        .nav-links a:hover { color: var(--primary-light); }
+        .nav-controls { display: flex; align-items: center; gap: 10px; }
+        .nav-btn {
+            background: none; border: 1px solid var(--border); color: var(--text);
+            cursor: pointer; padding: 5px 10px; border-radius: 5px;
+            font-size: 0.78rem; font-weight: 600; transition: all var(--transition);
+        }
+        .nav-btn:hover { background: var(--primary-light); color: #fff; border-color: var(--primary-light); }
+        .hamburger { display: none; background: none; border: none; font-size: 1.3rem; color: var(--text); cursor: pointer; }
 
-    header h1 {
-      margin: 0;
-    }
+        /* Main content */
+        .main { max-width: 820px; margin: 0 auto; padding: 80px 24px 40px; }
+        section { margin-bottom: 56px; }
+        .section-title {
+            font-size: 1.3rem; font-weight: 700; color: var(--primary);
+            margin-bottom: 20px; padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-light); display: inline-block;
+        }
 
-    header p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
+        /* About - side by side */
+        .about-row { display: flex; gap: 32px; align-items: flex-start; }
+        .about-info { flex: 1; }
+        .about-info h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 4px; }
+        .about-info .affiliation { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 16px; }
+        .about-info .bio { font-size: 0.95rem; line-height: 1.8; color: var(--text); }
+        .about-links { display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+        .about-links a {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 0.88rem; color: var(--text-secondary);
+            padding: 4px 0;
+        }
+        .about-links a:hover { color: var(--primary-light); }
+        .about-links a i { font-size: 1rem; }
 
-    .container {
-      padding: 50px 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+        /* Tags */
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .tag {
+            background: var(--tag-bg); color: var(--tag-text);
+            padding: 4px 14px; border-radius: 16px; font-size: 0.8rem; font-weight: 500;
+        }
 
-    .section-title {
-      font-size: 2rem;
-      color: #2c3e50;
-      margin-bottom: 20px;
-    }
+        /* News */
+        .news-list { list-style: none; }
+        .news-list li {
+            padding: 8px 0; border-bottom: 1px solid var(--border);
+            font-size: 0.92rem; display: flex; gap: 12px;
+        }
+        .news-list li:last-child { border-bottom: none; }
+        .news-date { color: var(--text-secondary); font-size: 0.82rem; white-space: nowrap; min-width: 80px; }
 
-    .section-content {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: #555;
-    }
+        /* Publications */
+        .pub-list { display: flex; flex-direction: column; gap: 20px; }
+        .pub-item { padding-left: 16px; border-left: 3px solid var(--primary-light); }
+        .pub-title { font-weight: 600; font-size: 0.98rem; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+        .pub-authors { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 2px; }
+        .pub-venue { font-size: 0.84rem; color: var(--primary-light); font-style: italic; }
+        .pub-badge {
+            display: inline-block; font-size: 0.7rem; padding: 1px 7px; border-radius: 3px;
+            font-style: normal; font-weight: 600; margin-left: 6px; vertical-align: middle;
+        }
+        .pub-badge.accepted { background: #27ae60; color: #fff; }
+        .pub-badge.wip { background: #f39c12; color: #fff; }
 
-    footer {
-      background-color: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
+        /* Education */
+        .edu-list { display: flex; flex-direction: column; gap: 14px; }
+        .edu-item { display: flex; gap: 14px; align-items: flex-start; }
+        .edu-icon {
+            width: 40px; height: 40px; background: var(--tag-bg); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: var(--primary-light); flex-shrink: 0; margin-top: 2px;
+        }
+        .edu-info h3 { font-size: 0.98rem; color: var(--text); margin-bottom: 1px; }
+        .edu-info .edu-degree { color: var(--primary-light); font-size: 0.88rem; font-weight: 500; }
+        .edu-info .edu-date { color: var(--text-secondary); font-size: 0.82rem; }
 
-    a {
-      color: #3498db;
-      text-decoration: none;
-    }
+        /* Awards */
+        .awards-list { display: flex; flex-direction: column; gap: 8px; }
+        .award-item { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; padding: 6px 0; }
+        .award-item i { color: #f1c40f; font-size: 0.9rem; flex-shrink: 0; }
+        .award-year { margin-left: auto; font-size: 0.8rem; color: var(--text-secondary); }
 
-    a:hover {
-      text-decoration: underline;
-    }
+        /* Footer */
+        footer {
+            max-width: 820px; margin: 0 auto; text-align: center;
+            padding: 24px; font-size: 0.82rem; color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
 
-    /* Simple responsive design */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
+        /* i18n */
+        [data-lang="en"] .zh { display: none; }
+        [data-lang="zh"] .en { display: none; }
 
-      .section-title {
-        font-size: 1.6rem;
-      }
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+            .nav-links.open {
+                display: flex; flex-direction: column; position: absolute;
+                top: 56px; left: 0; right: 0; background: var(--nav-bg);
+                padding: 14px 24px; gap: 14px; border-bottom: 1px solid var(--border);
+            }
+            .about-row { flex-direction: column; gap: 20px; }
+        }
 
-      .section-content {
-        font-size: 1rem;
-      }
-    }
-  </style>
+        .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Welcome to my Homepage</h1>
-  </header>
+<nav>
+    <div class="nav-inner">
+        <span class="nav-brand">
+            <span class="en">Yuanxin Guo</span>
+            <span class="zh">郭源欣</span>
+        </span>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about"><span class="en">About</span><span class="zh">关于</span></a></li>
+            <li><a href="#publications"><span class="en">Publications</span><span class="zh">论文</span></a></li>
+            <li><a href="#education"><span class="en">Education</span><span class="zh">教育</span></a></li>
+        </ul>
+        <div class="nav-controls">
+            <button class="nav-btn" id="langToggle" onclick="toggleLang()">中文</button>
+            <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+            <button class="hamburger" id="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        </div>
+    </div>
+</nav>
 
-  <div class="container">
-    <section>
-      <h2 class="section-title">About Me</h2>
-      <p class="section-content">Hello! </p>
-    </section>
+<div class="main">
 
-    <section>
-      <h2 class="section-title">Contact</h2>
-      <p class="section-content">Feel free to reach out to me via email</a></p>
-    </section>
-  </div>
+<!-- About -->
+<section id="about" class="fade-in">
+    <div class="about-row">
+        <div class="about-info">
+            <h1>
+                <span class="en">Yuanxin Guo</span>
+                <span class="zh">郭源欣</span>
+            </h1>
+            <div class="affiliation">
+                <span class="en">M.S. Student, Computer Science and Technology<br>Southwestern University of Finance and Economics (SWUFE)</span>
+                <span class="zh">西南财经大学 计算机科学与技术 硕士研究生</span>
+            </div>
+            <div class="bio">
+                <span class="en">
+                    I am a second-year M.S. student at <strong>SWUFE</strong>, Chengdu, China.
+                    My research focuses on <strong>binaural audio synthesis</strong> and <strong>speech/audio processing</strong>.
+                    I am particularly interested in end-to-end methods that synthesize spatial audio directly from mono mixtures
+                    without relying on source separation. I have published in <em>IEEE/ACM TASLP</em> as a student first author.
+                </span>
+                <span class="zh">
+                    我是<strong>西南财经大学</strong>计算机科学与技术专业硕士二年级研究生。
+                    研究方向为<strong>双耳音频合成</strong>与<strong>语音/音频处理</strong>，
+                    尤其关注从单声道混合信号直接合成空间音频的端到端方法。
+                    已在 <em>IEEE/ACM TASLP</em> 以学生一作发表论文。
+                </span>
+            </div>
+            <div class="tags">
+                <span class="tag"><span class="en">Binaural Audio Synthesis</span><span class="zh">双耳音频合成</span></span>
+                <span class="tag"><span class="en">Speech Processing</span><span class="zh">语音处理</span></span>
+                <span class="tag"><span class="en">Source Separation</span><span class="zh">音源分离</span></span>
+                <span class="tag"><span class="en">Spatial Audio</span><span class="zh">空间音频</span></span>
+            </div>
+            <div class="about-links">
+                <a href="mailto:guoyuanxin72@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+                <a href="https://github.com/YuanxinGuo" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://scholar.google.com.hk/citations?view_op=list_works&hl=zh-CN&user=aYOPvyQAAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- News -->
+<section id="news" class="fade-in">
+    <h2 class="section-title">
+        <span class="en">News</span>
+        <span class="zh">最新动态</span>
+    </h2>
+    <ul class="news-list">
+        <li>
+            <span class="news-date">2025.06</span>
+            <span>
+                <span class="en">Our paper <strong>MixBAS</strong> has been accepted by <em>IEEE/ACM TASLP</em>!</span>
+                <span class="zh">论文 <strong>MixBAS</strong> 被 <em>IEEE/ACM TASLP</em> 录用！</span>
+            </span>
+        </li>
+    </ul>
+</section>
+
+<!-- Publications -->
+<section id="publications" class="fade-in">
+    <h2 class="section-title">
+        <span class="en">Publications</span>
+        <span class="zh">发表论文</span>
+    </h2>
+    <div class="pub-list">
+        <div class="pub-item">
+            <div class="pub-title">MixBAS: A Transformer-Based End-to-End Mixed Mono to Binaural Audio Synthesis Method</div>
+            <div class="pub-authors"><strong>Yuanxin Guo</strong>, et al.</div>
+            <div class="pub-venue">IEEE/ACM Transactions on Audio, Speech, and Language Processing (TASLP), 2025
+                <span class="pub-badge accepted"><span class="en">Accepted</span><span class="zh">已录用</span></span>
+            </div>
+        </div>
+        <div class="pub-item">
+            <div class="pub-title">TCBAS: Text-Controlled Binaural Audio Synthesis from Mono Mixture</div>
+            <div class="pub-authors"><strong>Yuanxin Guo</strong>, et al.</div>
+            <div class="pub-venue">IEEE/ACM Transactions on Audio, Speech, and Language Processing (TASLP), 2025
+                <span class="pub-badge wip"><span class="en">In Progress</span><span class="zh">在研</span></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education -->
+<section id="education" class="fade-in">
+    <h2 class="section-title">
+        <span class="en">Education</span>
+        <span class="zh">教育经历</span>
+    </h2>
+    <div class="edu-list">
+        <div class="edu-item">
+            <div class="edu-icon"><i class="fas fa-university"></i></div>
+            <div class="edu-info">
+                <h3><span class="en">Southwestern University of Finance and Economics</span><span class="zh">西南财经大学</span></h3>
+                <div class="edu-degree"><span class="en">M.S. in Computer Science and Technology</span><span class="zh">计算机科学与技术 硕士</span></div>
+                <div class="edu-date">2024.09 - 2027.06</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</div>
+
+<footer>
+    <span class="en">&copy; 2025 Yuanxin Guo. Built with GitHub Pages.</span>
+    <span class="zh">&copy; 2025 郭源欣. 基于 GitHub Pages 搭建.</span>
+</footer>
+
+<script>
+    function toggleLang() {
+        const html = document.documentElement;
+        const btn = document.getElementById('langToggle');
+        if (html.getAttribute('data-lang') === 'en') {
+            html.setAttribute('data-lang', 'zh');
+            btn.textContent = 'EN';
+            document.title = '郭源欣 - 学术主页';
+        } else {
+            html.setAttribute('data-lang', 'en');
+            btn.textContent = '中文';
+            document.title = 'Yuanxin Guo - Academic Homepage';
+        }
+    }
+    function toggleTheme() {
+        const html = document.documentElement;
+        const icon = document.querySelector('#themeToggle i');
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            icon.className = 'fas fa-sun';
+        } else {
+            html.setAttribute('data-theme', 'light');
+            icon.className = 'fas fa-moon';
+        }
+    }
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('open');
+    }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+    });
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
